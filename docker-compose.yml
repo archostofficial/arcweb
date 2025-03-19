@@ -1,0 +1,347 @@
+version: '3.8'
+
+services:
+  # Shared web server for all tenants
+  nginx:
+    image: nginx:latest
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/conf:/etc/nginx/conf.d
+      - ./nginx/certs:/etc/nginx/certs
+      - ./nginx/letsencrypt:/etc/letsencrypt
+    restart: always
+    networks:
+      - odoo_network
+    depends_on:
+      - client1
+      - client2
+      - client3
+      - client4
+      - client5
+      - client6
+      - client7
+      - client8
+      - client9
+      - client10
+
+  # Main website (arcweb.com.au)
+  main:
+    build:
+      context: ./odoo
+      dockerfile: Dockerfile
+      args:
+        - ODOO_VERSION=18.0
+    image: arcweb/odoo:18.0
+    container_name: arcweb_main
+    restart: always
+    volumes:
+      - odoo-main-data:/var/lib/odoo
+      - ./odoo/addons/shared:/mnt/extra-addons/shared
+      - ./odoo/addons/main:/mnt/extra-addons/main
+      - ./odoo/config/main.conf:/etc/odoo/odoo.conf
+    environment:
+      - HOST=192.168.60.110
+      - PORT=5432
+      - USER=odoo
+      - PASSWORD_FILE=/run/secrets/db_password
+      - ADMIN_PASSWORD_FILE=/run/secrets/admin_password
+    networks:
+      - odoo_network
+    secrets:
+      - db_password
+      - admin_password
+
+  # Client 1
+  client1:
+    build:
+      context: ./odoo
+      dockerfile: Dockerfile
+      args:
+        - ODOO_VERSION=18.0
+    image: arcweb/odoo:18.0
+    container_name: arcweb_client1
+    restart: always
+    volumes:
+      - odoo-client1-data:/var/lib/odoo
+      - ./odoo/addons/shared:/mnt/extra-addons/shared
+      - ./odoo/addons/client1:/mnt/extra-addons/client1
+      - ./odoo/config/client1.conf:/etc/odoo/odoo.conf
+    environment:
+      - HOST=192.168.60.110
+      - PORT=5432
+      - USER=odoo
+      - PASSWORD_FILE=/run/secrets/db_password
+      - ADMIN_PASSWORD_FILE=/run/secrets/admin_password
+    networks:
+      - odoo_network
+    secrets:
+      - db_password
+      - admin_password
+
+  # Client 2
+  client2:
+    build:
+      context: ./odoo
+      dockerfile: Dockerfile
+      args:
+        - ODOO_VERSION=18.0
+    image: arcweb/odoo:18.0
+    container_name: arcweb_client2
+    restart: always
+    volumes:
+      - odoo-client2-data:/var/lib/odoo
+      - ./odoo/addons/shared:/mnt/extra-addons/shared
+      - ./odoo/addons/client2:/mnt/extra-addons/client2
+      - ./odoo/config/client2.conf:/etc/odoo/odoo.conf
+    environment:
+      - HOST=192.168.60.110
+      - PORT=5432
+      - USER=odoo
+      - PASSWORD_FILE=/run/secrets/db_password
+      - ADMIN_PASSWORD_FILE=/run/secrets/admin_password
+    networks:
+      - odoo_network
+    secrets:
+      - db_password
+      - admin_password
+
+  # Client 3
+  client3:
+    build:
+      context: ./odoo
+      dockerfile: Dockerfile
+      args:
+        - ODOO_VERSION=18.0
+    image: arcweb/odoo:18.0
+    container_name: arcweb_client3
+    restart: always
+    volumes:
+      - odoo-client3-data:/var/lib/odoo
+      - ./odoo/addons/shared:/mnt/extra-addons/shared
+      - ./odoo/addons/client3:/mnt/extra-addons/client3
+      - ./odoo/config/client3.conf:/etc/odoo/odoo.conf
+    environment:
+      - HOST=192.168.60.110
+      - PORT=5432
+      - USER=odoo
+      - PASSWORD_FILE=/run/secrets/db_password
+      - ADMIN_PASSWORD_FILE=/run/secrets/admin_password
+    networks:
+      - odoo_network
+    secrets:
+      - db_password
+      - admin_password
+
+  # Client 4
+  client4:
+    build:
+      context: ./odoo
+      dockerfile: Dockerfile
+      args:
+        - ODOO_VERSION=18.0
+    image: arcweb/odoo:18.0
+    container_name: arcweb_client4
+    restart: always
+    volumes:
+      - odoo-client4-data:/var/lib/odoo
+      - ./odoo/addons/shared:/mnt/extra-addons/shared
+      - ./odoo/addons/client4:/mnt/extra-addons/client4
+      - ./odoo/config/client4.conf:/etc/odoo/odoo.conf
+    environment:
+      - HOST=192.168.60.110
+      - PORT=5432
+      - USER=odoo
+      - PASSWORD_FILE=/run/secrets/db_password
+      - ADMIN_PASSWORD_FILE=/run/secrets/admin_password
+    networks:
+      - odoo_network
+    secrets:
+      - db_password
+      - admin_password
+
+  # Client 5
+  client5:
+    build:
+      context: ./odoo
+      dockerfile: Dockerfile
+      args:
+        - ODOO_VERSION=18.0
+    image: arcweb/odoo:18.0
+    container_name: arcweb_client5
+    restart: always
+    volumes:
+      - odoo-client5-data:/var/lib/odoo
+      - ./odoo/addons/shared:/mnt/extra-addons/shared
+      - ./odoo/addons/client5:/mnt/extra-addons/client5
+      - ./odoo/config/client5.conf:/etc/odoo/odoo.conf
+    environment:
+      - HOST=192.168.60.110
+      - PORT=5432
+      - USER=odoo
+      - PASSWORD_FILE=/run/secrets/db_password
+      - ADMIN_PASSWORD_FILE=/run/secrets/admin_password
+    networks:
+      - odoo_network
+    secrets:
+      - db_password
+      - admin_password
+
+  # Client 6
+  client6:
+    build:
+      context: ./odoo
+      dockerfile: Dockerfile
+      args:
+        - ODOO_VERSION=18.0
+    image: arcweb/odoo:18.0
+    container_name: arcweb_client6
+    restart: always
+    volumes:
+      - odoo-client6-data:/var/lib/odoo
+      - ./odoo/addons/shared:/mnt/extra-addons/shared
+      - ./odoo/addons/client6:/mnt/extra-addons/client6
+      - ./odoo/config/client6.conf:/etc/odoo/odoo.conf
+    environment:
+      - HOST=192.168.60.110
+      - PORT=5432
+      - USER=odoo
+      - PASSWORD_FILE=/run/secrets/db_password
+      - ADMIN_PASSWORD_FILE=/run/secrets/admin_password
+    networks:
+      - odoo_network
+    secrets:
+      - db_password
+      - admin_password
+
+  # Client 7
+  client7:
+    build:
+      context: ./odoo
+      dockerfile: Dockerfile
+      args:
+        - ODOO_VERSION=18.0
+    image: arcweb/odoo:18.0
+    container_name: arcweb_client7
+    restart: always
+    volumes:
+      - odoo-client7-data:/var/lib/odoo
+      - ./odoo/addons/shared:/mnt/extra-addons/shared
+      - ./odoo/addons/client7:/mnt/extra-addons/client7
+      - ./odoo/config/client7.conf:/etc/odoo/odoo.conf
+    environment:
+      - HOST=192.168.60.110
+      - PORT=5432
+      - USER=odoo
+      - PASSWORD_FILE=/run/secrets/db_password
+      - ADMIN_PASSWORD_FILE=/run/secrets/admin_password
+    networks:
+      - odoo_network
+    secrets:
+      - db_password
+      - admin_password
+
+  # Client 8
+  client8:
+    build:
+      context: ./odoo
+      dockerfile: Dockerfile
+      args:
+        - ODOO_VERSION=18.0
+    image: arcweb/odoo:18.0
+    container_name: arcweb_client8
+    restart: always
+    volumes:
+      - odoo-client8-data:/var/lib/odoo
+      - ./odoo/addons/shared:/mnt/extra-addons/shared
+      - ./odoo/addons/client8:/mnt/extra-addons/client8
+      - ./odoo/config/client8.conf:/etc/odoo/odoo.conf
+    environment:
+      - HOST=192.168.60.110
+      - PORT=5432
+      - USER=odoo
+      - PASSWORD_FILE=/run/secrets/db_password
+      - ADMIN_PASSWORD_FILE=/run/secrets/admin_password
+    networks:
+      - odoo_network
+    secrets:
+      - db_password
+      - admin_password
+
+  # Client 9
+  client9:
+    build:
+      context: ./odoo
+      dockerfile: Dockerfile
+      args:
+        - ODOO_VERSION=18.0
+    image: arcweb/odoo:18.0
+    container_name: arcweb_client9
+    restart: always
+    volumes:
+      - odoo-client9-data:/var/lib/odoo
+      - ./odoo/addons/shared:/mnt/extra-addons/shared
+      - ./odoo/addons/client9:/mnt/extra-addons/client9
+      - ./odoo/config/client9.conf:/etc/odoo/odoo.conf
+    environment:
+      - HOST=192.168.60.110
+      - PORT=5432
+      - USER=odoo
+      - PASSWORD_FILE=/run/secrets/db_password
+      - ADMIN_PASSWORD_FILE=/run/secrets/admin_password
+    networks:
+      - odoo_network
+    secrets:
+      - db_password
+      - admin_password
+
+  # Client 10
+  client10:
+    build:
+      context: ./odoo
+      dockerfile: Dockerfile
+      args:
+        - ODOO_VERSION=18.0
+    image: arcweb/odoo:18.0
+    container_name: arcweb_client10
+    restart: always
+    volumes:
+      - odoo-client10-data:/var/lib/odoo
+      - ./odoo/addons/shared:/mnt/extra-addons/shared
+      - ./odoo/addons/client10:/mnt/extra-addons/client10
+      - ./odoo/config/client10.conf:/etc/odoo/odoo.conf
+    environment:
+      - HOST=192.168.60.110
+      - PORT=5432
+      - USER=odoo
+      - PASSWORD_FILE=/run/secrets/db_password
+      - ADMIN_PASSWORD_FILE=/run/secrets/admin_password
+    networks:
+      - odoo_network
+    secrets:
+      - db_password
+      - admin_password
+
+networks:
+  odoo_network:
+    driver: bridge
+
+volumes:
+  odoo-main-data:
+  odoo-client1-data:
+  odoo-client2-data:
+  odoo-client3-data:
+  odoo-client4-data:
+  odoo-client5-data:
+  odoo-client6-data:
+  odoo-client7-data:
+  odoo-client8-data:
+  odoo-client9-data:
+  odoo-client10-data:
+
+secrets:
+  db_password:
+    file: ./secrets/db_password.txt
+  admin_password:
+    file: ./secrets/admin_password.txt
